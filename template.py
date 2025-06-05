@@ -1,3 +1,5 @@
+"""Initialize template for the beginning of the project."""
+
 import os
 from pathlib import Path
 

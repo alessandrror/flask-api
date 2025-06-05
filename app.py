@@ -1,3 +1,5 @@
+"""Initialize app as module."""
+
 from src import app, config
 
 if __name__ == "__main__":
