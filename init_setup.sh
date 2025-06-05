@@ -85,9 +85,9 @@ pre-commit install
 pre-commit run --all-files
 
 echo "[ `date` ]": "setting github workflows"
-mkdir -p .github/workflows/pytest.yml && touch .github/workflows/pytest.yml
+mkdir -p .github/workflows && touch .github/workflows/pytest.yml
 
-cat << EOF >> .github/workflows/pylint.yml
+cat << EOF >> .github/workflows/pytest.yml
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
@@ -105,10 +105,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
+    - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: "3.12"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -125,7 +125,7 @@ jobs:
         pytest
 EOF
 
-mkdir -p .github/workflows/pylint.yml && touch .github/workflows/pylint.yml
+mkdir -p .github/workflows && touch .github/workflows/pylint.yml
 cat << EOF >> .github/workflows/pylint.yml
 name: Pylint
 
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.12"]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
