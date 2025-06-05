@@ -85,7 +85,9 @@ pre-commit install
 pre-commit run --all-files
 
 echo "[ `date` ]": "setting github workflows"
-mkdir -p .github/workflows && touch .github/workflows/pytest.yml
+mkdir -p .github/workflows
+touch .github/workflows/pytest.yml
+touch .github/workflows/pylint.yml
 
 cat << EOF >> .github/workflows/pytest.yml
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
@@ -106,7 +108,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.12
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.12"
     - name: Install dependencies
@@ -125,31 +127,33 @@ jobs:
         pytest
 EOF
 
-mkdir -p .github/workflows && touch .github/workflows/pylint.yml
 cat << EOF >> .github/workflows/pylint.yml
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
 name: Pylint
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.12"]
+
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.12"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint $(git ls-files "*.py")
 EOF
 
 echo "[ `date` ]": "END"
