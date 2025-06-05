@@ -58,3 +58,15 @@ __pycache__/
 # Local configuration files
 .env
 instance/
+# Virtual enviroment directories
+venv/
+.venv/
+
+# Cahe files
+__pycache__/
+*.pyc
+*.o
+
+# Local configuration files
+.env
+instance/
